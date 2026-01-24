@@ -1,22 +1,32 @@
 package org.mokirim.infrastructure.web.resources;
 
-import jakarta.enterprise.inject.Produces;
+import java.util.UUID;
+
+import org.mokirim.domain.features.FindCharacterById;
+
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.AllArgsConstructor;
 
 @Path("/characters")
+@AllArgsConstructor
 public class CharactersResource {
+
+	private final FindCharacterById findCharacterById;
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCharacterById(
-		@PathParam("id") Integer id) {
+					@PathParam("id") UUID id) {
 
+			final var character = findCharacterById.handle(id);
+			return Response.ok(character)
+					.status(Response.Status.OK)
+					.build();
 	}
 }
