@@ -2,7 +2,7 @@ package org.mokirim.infrastructure.web.resources;
 
 import java.util.UUID;
 
-import org.mokirim.domain.features.FindCharacterById;
+import org.mokirim.domain.features.FindAgentById;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -14,9 +14,9 @@ import lombok.AllArgsConstructor;
 
 @Path("/characters")
 @AllArgsConstructor
-public class CharactersResource {
+public class AgentsResource {
 
-	private final FindCharacterById findCharacterById;
+	private final FindAgentById findCharacterById;
 
 	@GET
 	@Path("/{id}")

@@ -18,8 +18,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "characters")
-public class CharacterEntity {
+@Table(name = "agents")
+public class AgentsEntity {
 
 	@Id
 	@GeneratedValue

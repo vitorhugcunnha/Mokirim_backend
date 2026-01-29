@@ -1,7 +1,7 @@
 package org.mokirim.infrastructure.repository.hibernate.entity;
 
-import org.mokirim.domain.model.Character.Character;
-import org.mokirim.domain.model.Character.CharacterBuilder;
+import org.mokirim.domain.model.Character.Agents;
+import org.mokirim.domain.model.Character.AgentsBuilder;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.AllArgsConstructor;
@@ -10,14 +10,14 @@ import lombok.AllArgsConstructor;
 @ApplicationScoped
 public class EntityUtils {
 
-	private final CharacterBuilder characterBuilder;
+	private final AgentsBuilder characterBuilder;
 
-	public Character character(CharacterEntity characterEntity) {
+	public Agents character(AgentsEntity agentsEntity) {
 		return characterBuilder.build(
-									characterEntity.getId(),
-									characterEntity.getName(),
-									characterEntity.getDescription(),
-									characterEntity.getCreatedAt(),
-									characterEntity.getUpdatedAt());
+									agentsEntity.getId(),
+									agentsEntity.getName(),
+									agentsEntity.getDescription(),
+									agentsEntity.getCreatedAt(),
+									agentsEntity.getUpdatedAt());
 	}
 }

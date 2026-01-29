@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Character {
+public class Agents {
 
 	private UUID id;
 	private String name;

@@ -8,9 +8,9 @@ import lombok.AllArgsConstructor;
 
 @ApplicationScoped
 @AllArgsConstructor
-public class CharacterBuilder {
+public class AgentsBuilder {
 
-	public Character build(UUID id, String name, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
-		return new Character(id, name, description, createdAt, updatedAt);
+	public Agents build(UUID id, String name, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		return new Agents(id, name, description, createdAt, updatedAt);
 	}
 }
