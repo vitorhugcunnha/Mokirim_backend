@@ -10,13 +10,19 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import io.quarkus.security.UnauthorizedException;
+import jakarta.enterprise.context.ApplicationScoped;
 
+@ApplicationScoped
 public class TokenDecoderImpl implements TokenDecoder {
 
 	@Override
 	public DecodedToken decode(String token) {
 
 		final String SECRET = System.getenv("TOKEN_SECRET");
+
+		if (SECRET == null || SECRET.isBlank()) {
+			throw new IllegalStateException("TOKEN_SECRET not configured");
+		}
 
 		try {
 			Claims claims = Jwts.parserBuilder()
