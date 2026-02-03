@@ -1,6 +1,8 @@
 package org.mokirim.infrastructure.security.authentication;
 
 import org.mokirim.infrastructure.security.authentication.token.TokenDecoder;
+import org.mokirim.infrastructure.security.context.MokirimPrincipal;
+import org.mokirim.infrastructure.security.context.MokirimSecurityContext;
 
 import jakarta.annotation.Priority;
 import jakarta.inject.Inject;
@@ -27,5 +29,9 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 		}
 
 		final var token = tokenDecoder.decode(authHeader);
+		final var mokirimPrincipal = new MokirimPrincipal(token.getUserId(), token.getUsername());
+		final var securityContext = new MokirimSecurityContext(mokirimPrincipal);
+
+		requestContext.setSecurityContext(securityContext);
 	}
 }
