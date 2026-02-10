@@ -3,6 +3,8 @@ package org.mokirim.infrastructure.web.resources;
 import java.util.UUID;
 
 import org.mokirim.domain.features.FindAgentById;
+import org.mokirim.infrastructure.security.authorization.annotation.Secured;
+import org.mokirim.infrastructure.security.authorization.role.Role;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -22,6 +24,7 @@ public class AgentsResource {
 
 	@GET
 	@Path("/{id}")
+	@Secured({ Role.PLAYER })
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCharacterById(
 					@PathParam("id") UUID id,
