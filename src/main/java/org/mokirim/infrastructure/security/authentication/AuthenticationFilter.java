@@ -1,6 +1,7 @@
 package org.mokirim.infrastructure.security.authentication;
 
 import org.mokirim.infrastructure.security.authentication.token.TokenDecoder;
+import org.mokirim.infrastructure.security.authorization.annotation.Secured;
 import org.mokirim.infrastructure.security.context.MokirimPrincipal;
 import org.mokirim.infrastructure.security.context.MokirimSecurityContext;
 
@@ -31,8 +32,14 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
 		String authHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
+		final var secured = getSecuredAnnotation();
+
+		if (secured == null || Boolean.TRUE.equals(secured.optional())) {
+			return;
+		}
+
 		if (authHeader == null || !authHeader.startsWith("Mokirim ")) {
-			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+			requestContext.abortWith(Response.status(Response.Status.FORBIDDEN).build());
 			return;
 		}
 
@@ -46,4 +53,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 			throw new UnauthorizedException("Invalid token " + error);
 		}
 	}
+
+	private Secured getSecuredAnnotation() {
+        if (resourceInfo.getResourceMethod().isAnnotationPresent(Secured.class)) {
+            return resourceInfo.getResourceMethod().getAnnotation(Secured.class);
+        }
+        return resourceInfo.getResourceClass().getAnnotation(Secured.class);
+    }
 }
