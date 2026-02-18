@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.mokirim.infrastructure.security.authentication.token.DecodedToken;
 import org.mokirim.infrastructure.security.authentication.token.TokenDecoder;
+import org.mokirim.infrastructure.security.authorization.role.Role;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -35,8 +36,9 @@ public class TokenDecoderImpl implements TokenDecoder {
 
 			UUID userId = UUID.fromString(claims.getSubject());
 			String username = claims.get("username", String.class);
+			Role role = claims.get("role", Role.class);
 
-			return new DecodedToken(userId, username);
+			return new DecodedToken(userId, username, role);
 		} catch (JwtException error) {
 			System.err.println("Falha ao decodificar token: " + error.getMessage());
 			throw new UnauthorizedException();
