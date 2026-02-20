@@ -24,7 +24,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 
 		final var secured = getSecuredAnnotation();
 
-		if (secured == null) {
+		if (secured == null || Boolean.TRUE.equals(secured.optional())) {
 			return;
 		}
 
